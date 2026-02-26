@@ -1,0 +1,69 @@
+package fidelity.collections;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class LinkedListExp {
+	public static void main(String[] args) {
+			 
+	        LinkedList<String> months = new LinkedList<>();
+	 
+	        months.add("May");
+	        months.add("June");
+	        months.add("July");
+	        months.add("August");
+	        months.add("April");
+	        months.add("November");
+	 
+	        months.addLast("December");
+	 
+	        months.addFirst("January");
+	 
+	        months.add(1, "March");
+	        months.add(1, "February");
+	 
+	        months.add(months.indexOf("August") + 1, "September");
+	        months.add(months.indexOf("September") + 1, "October");
+	 
+	        System.out.println("All Months: " + months);
+	 
+	        System.out.println("Even Months:");
+	        for (int i = 1; i < months.size(); i += 2) {
+	            System.out.print(months.get(i) + " ");
+	        }
+	 
+	        System.out.println("\nOdd Months:");
+	        for (int i = 0; i < months.size(); i += 2) {
+	            System.out.print(months.get(i) + " ");
+	        }
+	 
+	        System.out.println("\n\nUsing Iterator:");
+	        Iterator<String> itr = months.iterator();
+	        while (itr.hasNext()) {
+	            System.out.print(itr.next() + " ");
+	        }
+	 
+	        System.out.println("\n\nFirst and Last Month: "
+	                + months.getFirst() + " , " + months.getLast());
+	 
+	        String birthdayMonth = "May";
+	        months.remove(birthdayMonth);
+	        System.out.println("After removing birthday month: " + months);
+	 
+	        if (months.contains("December") ||
+	            months.contains("January") ||
+	            months.contains("February")) {
+	            System.out.println("Winter month is present.");
+	        } else {
+	            System.out.println("Winter month is not present.");
+	        }
+	 
+	        System.out.println("Peek First: " + months.peekFirst());
+	        System.out.println("Peek Last: " + months.peekLast());
+	 
+	        System.out.println("Poll First: " + months.pollFirst());
+	        System.out.println("Poll Last: " + months.pollLast());
+	 
+	        System.out.println("Final List: " + months);
+	    }
+}
