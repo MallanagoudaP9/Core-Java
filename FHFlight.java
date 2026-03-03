@@ -51,11 +51,7 @@ public class FHFlight {
          oos.close();
 
          FileWriter fw = new FileWriter("flight.txt");
-         fw.write("FlightID, Name, Source, Destination\n");
-         fw.write(f1.getFlightID() + ", "
-                 + f1.getName() + ", "
-                 + f1.getSource() + ", "
-                 + f1.getDestination());
+         fw.write("FlightID: " +f1.getFlightID() + "\n" + "Name: " + f1.getName() + "\n" + "Source: " + f1.getSource() + "\n" + "Destination: " +f1.getDestination());
          fw.close();
 
          FileReader fr = new FileReader("flight.txt");
