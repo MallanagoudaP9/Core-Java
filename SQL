@@ -1,0 +1,70 @@
+create database fmr;
+use fmr;
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
+);
+
+Desc categories;
+
+CREATE TABLE suppliers (
+    supplier_id SERIAL PRIMARY KEY,
+    supplier_name VARCHAR(100) NOT NULL,
+    contact_email VARCHAR(100),
+    phone VARCHAR(20)
+);
+
+Desc suppliers;
+
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    category_id INT REFERENCES categories(category_id) ,
+    supplier_id INT REFERENCES suppliers(supplier_id) ,
+    price NUMERIC(10, 2) CHECK (price >= 0),
+    stock_quantity INT CHECK (stock_quantity >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Desc products;
+ 
+INSERT INTO categories (category_name, description) VALUES
+('Electronics', 'Devices and gadgets'),
+('Books', 'Printed and digital books'),
+('Clothing', 'Apparel and accessories');
+select * from categories;
+ 
+INSERT INTO suppliers (supplier_name, contact_email, phone) VALUES
+('Best Supplier Inc.', 'contact@bestsupplier.com', '123-456-7890'),
+('Global Goods', 'sales@globalgoods.com', '987-654-3210');
+select * from suppliers;
+
+INSERT INTO products (product_name, category_id, supplier_id, price, stock_quantity) VALUES
+('Smartphone Model X', 1, 1, 699.99, 50),
+('Wireless Headphones', 1, 2, 199.99, 30),
+('Mystery Novel', 2, 1, 14.99, 100),
+('T-shirt Classic', 3, 2, 9.99, 200),
+('E-reader', 1, 1, 129.99, 10);
+select * from products; 
+
+a). SELECT p.*, c.category_name, s.supplier_name  FROM  products p  JOIN categories ON p.category_id = c.category_id JOIN suppliers s ON p.supplier_id = s.supplier_id;
+b). SELECT * FROM products WHERE stock_quantity < 5;
+c). ALTER TABLE products ADD discount_percent INT DEFAULT 0;
+d). UPDATE products SET price = price *0.85 WHERE category_id IN (SELECT category_id FROM categories WHERE category_name = 'Electronics');
+e). SELECT COUNT(*) AS total_products FROM products;
+f). SELECT AVG(price) AS average_price FROM products;
+g). SELECT MAX(price) AS max_price, MIN(price) AS min_price FROM products WHERE category_id = (SELECT category_id FROM categories WHERE category_name = 'Electronics');
+h). SELECT c.category_name, COUNT(p.product_id) AS product_count FROM categories c LEFT JOIN products p ON c.category_id = p.category_id GROUP BY c.category_name;
+i). SELECT DISTINCT s.supplier_name  FROM suppliers s JOIN products p ON s.supplier_id = p.supplier_id WHERE p.price BETWEEN 50 and 200;
+j). SELECT  * FROM products WHERE category_id IN (1,3);
+k). SELECT category_id, SUM(stock_quantity) AS total_stock FROM products GROUP BY  category_id HAVING COUNT(product_id) > 1;
+l). SELECT supplier_id, AVG(price) AS avg_price FROM products GROUP BY supplier_id HAVING AVG(price) > 100;
+m). SELECT * FROM products ORDER BY price DESC;
+n). SELECT category_id, SUM(price * stock_quantity) AS total_stock_value FROM products GROUP BY category_id ORDER BY total_stock_value DESC;
+
+
+
+
+
+ 
